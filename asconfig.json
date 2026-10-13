@@ -1,0 +1,20 @@
+{
+  "targets": {
+    "release": {
+      "outFile": "web/game.wasm",
+      "textFile": "build/game.wat",
+      "optimizeLevel": 3,
+      "shrinkLevel": 0,
+      "sourceMap": false
+    },
+    "debug": {
+      "outFile": "web/game.wasm",
+      "debug": true,
+      "sourceMap": true
+    }
+  },
+  "options": {
+    "runtime": "incremental",
+    "exportRuntime": false
+  }
+}

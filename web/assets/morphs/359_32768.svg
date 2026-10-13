@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ffdec="https://www.free-decompiler.com/flash" ffdec:objectType="morphshape" height="24.8px" width="24.8px">
+  <g transform="matrix(1.0, 0.0, 0.0, 1.0, 11.9, 11.9)">
+    <path d="M-9.675 0.5 Q-9.675 4.65 -6.825 7.6 L-6.675 7.75 Q-3.725 10.65 0.45 10.675 L0.55 10.675 Q4.725 10.65 7.65 7.75 L7.7 7.7 Q9.225 6.175 9.975 4.35 10.675 2.625 10.675 0.6 L10.675 0.45 Q10.675 -1.55 9.975 -3.25 9.275 -5.1 7.8 -6.575 L7.7 -6.675 Q4.75 -9.65 0.6 -9.675 L0.45 -9.675 Q-3.725 -9.65 -6.675 -6.725 L-6.725 -6.675 Q-9.675 -3.7 -9.675 0.5" fill="url(#gradient0)" fill-rule="evenodd" stroke="none">
+      </path>
+    <path d="M-9.675 0.5 Q-9.675 -3.7 -6.725 -6.675 L-6.675 -6.725 Q-3.725 -9.65 0.45 -9.675 L0.6 -9.675 Q4.75 -9.65 7.7 -6.675 L7.8 -6.575 Q9.275 -5.1 9.975 -3.25 10.675 -1.55 10.675 0.45 L10.675 0.6 Q10.675 2.625 9.975 4.35 9.225 6.175 7.7 7.7 L7.65 7.75 Q4.725 10.65 0.55 10.675 L0.45 10.675 Q-3.725 10.65 -6.675 7.75 L-6.825 7.6 Q-9.675 4.65 -9.675 0.5 Z" fill="none" stroke="#000001" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.0" stroke-width="0" fill-opacity="0">
+      </path>
+  </g>
+  <defs>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.0098, 0.0, 0.0, 0.0098, 0.5, 0.5)" gradientUnits="userSpaceOnUse" id="gradient0" r="819.2" spreadMethod="pad">
+      <animateTransform additive="replace" attributeName="gradientTransform" dur="2s" from="1" repeatCount="indefinite" to="1" type="scale" />
+      <animateTransform additive="sum" attributeName="gradientTransform" dur="2s" from="0.5 0.5" repeatCount="indefinite" to="0.5 0.5" type="translate" />
+      <animateTransform additive="sum" attributeName="gradientTransform" dur="2s" from="0.0" repeatCount="indefinite" to="0.0" type="rotate" />
+      <animateTransform additive="sum" attributeName="gradientTransform" dur="2s" from="0.0098 0.0098" repeatCount="indefinite" to="0.0153 0.0153" type="scale" />
+      <animateTransform additive="sum" attributeName="gradientTransform" dur="2s" from="0.0" repeatCount="indefinite" to="0.0" type="skewX" />
+      <stop offset="0" stop-color="#000001" stop-opacity="0">
+        </stop>
+      <stop offset="0.8039" stop-color="#ededee" stop-opacity="0.098">
+        </stop>
+      <stop offset="1" stop-color="#ededee" stop-opacity="1">
+        </stop>
+    </radialGradient>
+  </defs>
+</svg>

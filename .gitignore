@@ -1,0 +1,7 @@
+node_modules/
+build/
+# decompiler output; regenerate from the SWF (see README)
+re/
+# built by `npm run build` (and by CI)
+web/game.wasm
+.DS_Store

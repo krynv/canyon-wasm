@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ffdec="https://www.free-decompiler.com/flash" ffdec:objectType="morphshape" height="50.0px" width="50.0px">
+  <g transform="matrix(1.0, 0.0, 0.0, 1.0, 25.0, 25.0)">
+    <path d="M-9.2 0 Q-9.2 3.8 -6.5 6.5 -3.8 9.2 0 9.2 3.8 9.2 6.5 6.5 9.2 3.8 9.2 0 9.2 -3.8 6.5 -6.5 3.8 -9.2 0 -9.2 -3.8 -9.2 -6.5 -6.5 -9.2 -3.8 -9.2 0" fill="url(#gradient0)" fill-rule="evenodd" stroke="none">
+      </path>
+    <path d="M-9.2 0 Q-9.2 -3.8 -6.5 -6.5 -3.8 -9.2 0 -9.2 3.8 -9.2 6.5 -6.5 9.2 -3.8 9.2 0 9.2 3.8 6.5 6.5 3.8 9.2 0 9.2 -3.8 9.2 -6.5 6.5 -9.2 3.8 -9.2 0 Z" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.0" stroke-width="0" fill-opacity="0">
+      </path>
+  </g>
+  <defs>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.0113, 0.0, 0.0, 0.0113, 0.0, 0.0)" gradientUnits="userSpaceOnUse" id="gradient0" r="819.2" spreadMethod="pad">
+      <animateTransform additive="replace" attributeName="gradientTransform" dur="2s" from="1" repeatCount="indefinite" to="1" type="scale" />
+      <animateTransform additive="sum" attributeName="gradientTransform" dur="2s" from="0.0 0.0" repeatCount="indefinite" to="0.0 0.0" type="translate" />
+      <animateTransform additive="sum" attributeName="gradientTransform" dur="2s" from="0.0" repeatCount="indefinite" to="0.0" type="rotate" />
+      <animateTransform additive="sum" attributeName="gradientTransform" dur="2s" from="0.0113 0.0113" repeatCount="indefinite" to="0.0307 0.0307" type="scale" />
+      <animateTransform additive="sum" attributeName="gradientTransform" dur="2s" from="0.0" repeatCount="indefinite" to="0.0" type="skewX" />
+      <stop offset="0" stop-color="#000000" stop-opacity="0">
+        </stop>
+      <stop offset="0.0706" stop-color="#ff6600" stop-opacity="1">
+        </stop>
+      <stop offset="0.9882" stop-color="#c0c0c0" stop-opacity="0">
+        </stop>
+    </radialGradient>
+  </defs>
+</svg>

@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ffdec="https://www.free-decompiler.com/flash" ffdec:objectType="morphshape" height="107.0px" width="107.0px">
+  <g transform="matrix(1.0, 0.0, 0.0, 1.0, 53.05, 53.55)">
+    <path d="M-53.05 -0.05 Q-53.05 14.85 -45.95 26.8 -42.5 32.65 -37.4 37.75 -32.2 42.95 -26.3 46.45 -14.35 53.45 0.5 53.45 15.4 53.45 27.35 46.35 33.15 42.9 38.25 37.75 43.4 32.6 46.9 26.75 53.95 14.8 53.95 -0.05 53.95 -14.9 46.95 -26.8 43.45 -32.7 38.25 -37.9 33.15 -43 27.35 -46.45 15.4 -53.55 0.45 -53.55 -14.35 -53.55 -26.3 -46.55 -32.2 -43.1 -37.4 -37.9 -42.55 -32.75 -46 -26.85 -53.05 -14.9 -53.05 -0.05" fill="url(#gradient0)" fill-rule="evenodd" stroke="none">
+      </path>
+    <path d="M-53.05 -0.05 Q-53.05 -14.9 -46 -26.85 -42.55 -32.75 -37.4 -37.9 -32.2 -43.1 -26.3 -46.55 -14.35 -53.55 0.45 -53.55 15.4 -53.55 27.35 -46.45 33.15 -43 38.25 -37.9 43.45 -32.7 46.95 -26.8 53.95 -14.9 53.95 -0.05 53.95 14.8 46.9 26.75 43.4 32.6 38.25 37.75 33.15 42.9 27.35 46.35 15.4 53.45 0.5 53.45 -14.35 53.45 -26.3 46.45 -32.2 42.95 -37.4 37.75 -42.5 32.65 -45.95 26.8 -53.05 14.85 -53.05 -0.05 -53.05 -14.9 -46 -26.85 -42.55 -32.75 -37.4 -37.9 -32.2 -43.1 -26.3 -46.55 -14.35 -53.55 0.45 -53.55 15.4 -53.55 27.35 -46.45 33.15 -43 38.25 -37.9 43.45 -32.7 46.95 -26.8 53.95 -14.9 53.95 -0.05 53.95 14.8 46.9 26.75 43.4 32.6 38.25 37.75 33.15 42.9 27.35 46.35 15.4 53.45 0.5 53.45 -14.35 53.45 -26.3 46.45 -32.2 42.95 -37.4 37.75 -42.5 32.65 -45.95 26.8 -53.05 14.85 -53.05 -0.05 Z" fill="none" stroke="#000099" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.05" fill-opacity="1">
+      </path>
+  </g>
+  <defs>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.0664, 0.0, 0.0, 0.0664, 0.45, -0.05)" gradientUnits="userSpaceOnUse" id="gradient0" r="819.2" spreadMethod="pad">
+      <animateTransform additive="replace" attributeName="gradientTransform" dur="2s" from="1" repeatCount="indefinite" to="1" type="scale" />
+      <animateTransform additive="sum" attributeName="gradientTransform" dur="2s" from="0.45 -0.05" repeatCount="indefinite" to="0.45 -0.05" type="translate" />
+      <animateTransform additive="sum" attributeName="gradientTransform" dur="2s" from="0.0" repeatCount="indefinite" to="0.0" type="rotate" />
+      <animateTransform additive="sum" attributeName="gradientTransform" dur="2s" from="0.0664 0.0664" repeatCount="indefinite" to="0.0664 0.0664" type="scale" />
+      <animateTransform additive="sum" attributeName="gradientTransform" dur="2s" from="0.0" repeatCount="indefinite" to="0.0" type="skewX" />
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.498">
+        </stop>
+      <stop offset="0.3137" stop-color="#cddff0" stop-opacity="0.498">
+        </stop>
+      <stop offset="0.4" stop-color="#ffffff" stop-opacity="1">
+        </stop>
+      <stop offset="0.5059" stop-color="#aecbe7" stop-opacity="0.498">
+        </stop>
+      <stop offset="0.7922" stop-color="#7facd9" stop-opacity="0.498">
+        </stop>
+      <stop offset="1" stop-color="#015ab4" stop-opacity="0.498">
+        </stop>
+    </radialGradient>
+  </defs>
+</svg>
