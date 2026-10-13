@@ -27,13 +27,15 @@ export const STATE_SOUNDOPTIONS: i32 = 7;
 
 const SOUND_OPTION_STEP: i32 = 5;
 const SOUND_CHANNEL_NAMES: string[] = ["Music", "Sfx"];
+const GRAPHICS_MODE_NAMES: string[] = ["ORIGINAL", "SMOOTH", "PIXEL"];
 
-/** Show the stored volumes on a sound options strip (`id_soundOptions`). */
+/** Show the stored settings on an options strip (`id_soundOptions`). */
 function refreshSoundOptions(strip: i32): void {
   for (let c = 0; c < SOUND_CHANNEL_NAMES.length; c++) {
     host.setText(host.child(strip, "text" + SOUND_CHANNEL_NAMES[c]), host.optVolume(c).toString() + "%");
     host.setText(host.child(strip, "text" + SOUND_CHANNEL_NAMES[c] + "On"), host.optOn(c) ? "ON" : "OFF");
   }
+  host.setText(host.child(strip, "textGraphics"), GRAPHICS_MODE_NAMES[host.optGraphics() % GRAPHICS_MODE_NAMES.length]);
 }
 
 const INITIAL_FUNDS: f64 = 350;
@@ -217,7 +219,7 @@ export class CGame {
       host.setPos(this.mcGamePaused, 80, 140);
       this.mcQuitDialog = this.mcGameOverDialog = 0; // same depth: replaced
       this.mcSoundOptions = host.attach(this.h, "id_soundOptions", "_mcSoundOptions", 101);
-      host.setPos(this.mcSoundOptions, 159, 288);
+      host.setPos(this.mcSoundOptions, 159, 286);
       refreshSoundOptions(this.mcSoundOptions);
       this.processing = false;
       this.layerCanvas.clear();
@@ -686,6 +688,12 @@ export class CGame {
       const action = button % 10;
       if (action == 2) host.optSetOn(channel, !host.optOn(channel));
       else host.optSetVolume(channel, host.optVolume(channel) + (action == 1 ? SOUND_OPTION_STEP : -SOUND_OPTION_STEP));
+      refreshSoundOptions(parent);
+      playSound(C.SND_SWITCH);
+      return;
+    }
+    if (button == 9120) { // options strip: cycle the graphics mode
+      host.optSetGraphics((host.optGraphics() + 1) % GRAPHICS_MODE_NAMES.length);
       refreshSoundOptions(parent);
       playSound(C.SND_SWITCH);
       return;

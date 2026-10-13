@@ -207,7 +207,7 @@ def reachable_chars(movie):
     return seen
 
 
-# ---- sound options UI (not in the original SWF) ------------------------------------------------
+# ---- options UI (not in the original SWF) ------------------------------------------------
 # Built from the game's own parts: the grey menu button body (shape 19), the yellow dialog
 # button (sprite 398, hit shape 397), the options background (shape 594) and embedded font 10.
 OPT_PANEL = 9000         # custom panel shape
@@ -216,7 +216,8 @@ OPT_STRIP = 9020         # exported as id_soundOptions: the two volume rows
 OPT_SCREEN = 9030        # exported as id_mcSoundScreen
 # button ids handled in assembly/game.ts: 91c0 quieter, 91c1 louder, 91c2 on/off (c = channel)
 OPT_CHANNELS = [('Music', 'MUSIC', 9100), ('Sfx', 'EFFECTS', 9110)]
-PANEL_W, PANEL_H = 330, 84
+OPT_GRAPHICS_BUTTON = 9120  # cycles the bitmap filtering mode
+PANEL_W, PANEL_H = 330, 118
 
 PANEL_SVG = """<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="%dpx" height="%dpx">
@@ -277,13 +278,20 @@ def add_options_ui(movie):
             is_button = chars[str(cid)]['t'] == 'button'
             ops.append(place(cid, depth, x, y if is_button else y + 3, name))
             depth += 1
+    # third row: [GRAPHICS] [ mode ]
+    y = 14 + len(OPT_CHANNELS) * 34
+    yellow_button(OPT_GRAPHICS_BUTTON, 6.72)  # spans the three sound buttons above it
+    for cid, x, name in [(label('GRAPHICS', 13, cream, 100), 16, None), (OPT_GRAPHICS_BUTTON, 118, None),
+                         (label('ORIGINAL', 13, black, 194, 2), 120, 'textGraphics')]:
+        ops.append(place(cid, depth, x, y if cid == OPT_GRAPHICS_BUTTON else y + 3, name))
+        depth += 1
     chars[str(OPT_STRIP)] = {'t': 'sprite', 'frames': [ops], 'labels': {}}
 
     # the screen: background, title, strip, Back
-    title = label('SOUND OPTIONS', 26, black, 650, 2)
+    title = label('OPTIONS', 26, black, 650, 2)
     chars[str(OPT_SCREEN)] = {'t': 'sprite', 'labels': {}, 'frames': [[
         place(594, 1, 0, 0), place(title, 2, 2, 40),
-        place(OPT_STRIP, 3, (650 - PANEL_W) / 2, 170, 'mcSoundOptions'), place(597, 4, 16.0, 380.0),
+        place(OPT_STRIP, 3, (650 - PANEL_W) / 2, 155, 'mcSoundOptions'), place(597, 4, 16.0, 380.0),
     ]]}
     movie['exports']['id_soundOptions'] = OPT_STRIP
     movie['exports']['id_mcSoundScreen'] = OPT_SCREEN
@@ -321,6 +329,8 @@ def main():
             src = os.path.join(RE, 'export', 'shapes', cid + '.svg')
             if os.path.exists(src):
                 c['img'] = svg_box(src)
+                if '<image' in open(src, encoding='utf-8').read():
+                    c['bmp'] = 1  # bitmap-filled: the host can re-load it smoothed or pixelated
                 shutil.copyfile(src, os.path.join(OUT, 'shapes', cid + '.svg'))
         elif c['t'] == 'text':
             src = os.path.join(RE, 'export2', 'texts', cid + '.svg')

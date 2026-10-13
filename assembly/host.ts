@@ -163,6 +163,14 @@ export declare function optOn(channel: i32): bool;
 @external("host", "optSetOn")
 export declare function optSetOn(channel: i32, on: bool): void;
 
+/** Bitmap filtering: 0 = as authored (mixed), 1 = smooth everything, 2 = hard pixels. */
+// @ts-ignore: decorator
+@external("host", "optGraphics")
+export declare function optGraphics(): i32;
+// @ts-ignore: decorator
+@external("host", "optSetGraphics")
+export declare function optSetGraphics(mode: i32): void;
+
 // ---- misc -------------------------------------------------------------------------------------
 
 /** AS2 random(n): integer in [0, n). */

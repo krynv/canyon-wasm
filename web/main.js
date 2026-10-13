@@ -2,7 +2,7 @@
 // 24 fps frame loop. The core drives the display list through the `host` imports below.
 import { Stage, STAGE_W } from './flash.js';
 import { SoundService } from './sound.js';
-import { SoundOptions } from './options.js';
+import { SoundOptions, GRAPHICS_SMOOTH, GRAPHICS_PIXEL } from './options.js';
 
 const FRAME_MS = 1000 / 24;   // simulation step: the original's 24 fps, never changes
 const MAX_RENDER_FPS = 140;   // drawing runs at the display's refresh rate, up to this
@@ -22,7 +22,27 @@ function loadImage(url) {
   });
 }
 
-async function loadAssets(movie, onProgress) {
+/**
+ * Bitmap-filled shapes carry the SWF's per-bitmap smoothing flag as an `image-rendering` style
+ * on their <image> elements. Rewriting that style gives the smooth / pixel graphics modes from
+ * the same files; `GRAPHICS_ORIGINAL` leaves the authored mix.
+ */
+function restyleBitmaps(svg, mode) {
+  if (mode !== GRAPHICS_SMOOTH && mode !== GRAPHICS_PIXEL) return svg;
+  const plain = svg.replace(/ style="image-rendering:[^"]*"/g, '');
+  return mode === GRAPHICS_PIXEL ? plain.replace(/<image /g, '<image style="image-rendering:pixelated" ') : plain;
+}
+
+async function svgImage(text) {
+  const url = URL.createObjectURL(new Blob([text], { type: 'image/svg+xml' }));
+  try {
+    return await loadImage(url);
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}
+
+async function loadAssets(movie, graphicsMode, onProgress) {
   const keys = [];
   for (const [id, c] of Object.entries(movie.chars)) {
     if (!c.img) continue;
@@ -35,8 +55,16 @@ async function loadAssets(movie, onProgress) {
   const step = () => onProgress(++done / total);
 
   const images = new Map();
+  const bitmapSvgs = new Map(); // key -> SVG source, kept so the graphics mode can be switched
   const imageJobs = keys.map(async (key) => {
-    images.set(key, await loadImage(`${ASSETS}${key}.svg`));
+    const [dir, id] = key.split('/');
+    if (dir === 'shapes' && movie.chars[id].bmp) {
+      const text = await (await fetch(`${ASSETS}${key}.svg`)).text();
+      bitmapSvgs.set(key, text);
+      images.set(key, await svgImage(restyleBitmaps(text, graphicsMode)));
+    } else {
+      images.set(key, await loadImage(`${ASSETS}${key}.svg`));
+    }
     step();
   });
 
@@ -64,21 +92,35 @@ async function loadAssets(movie, onProgress) {
 
   await Promise.all([...imageJobs, ...fontJobs]);
   const buffers = await Promise.all(soundJobs);
-  return { images, audio, buffers };
+  return { images, bitmapSvgs, audio, buffers };
 }
 
 async function boot() {
   const movie = await (await fetch(`${ASSETS}movie.json`)).json();
-  const { images, audio, buffers } = await loadAssets(movie, (p) => {
+  let sounds = null;
+  const options = new SoundOptions((music, effects) => sounds?.setMix(music, effects));
+  const { images, bitmapSvgs, audio, buffers } = await loadAssets(movie, options.graphics, (p) => {
     statusEl.textContent = `Loading… ${Math.round(p * 100)}%`;
   });
-  const sounds = new SoundService(audio, buffers);
-  const options = new SoundOptions((music, effects) => sounds.setMix(music, effects));
+  sounds = new SoundService(audio, buffers);
+  options.apply();
   if (options.muted) sounds.off(); // restore the mute switch before the game starts its music
   const stage = new Stage(movie, images, canvas, {
     playSound: (id, ifStopped, repeat) => sounds.play(id, ifStopped, repeat),
     soundIsOn: () => sounds.isOn(),
   });
+
+  // Switching graphics mode re-decodes the bitmap shapes; each swaps in as soon as it is ready.
+  let graphicsRequest = 0;
+  options.onGraphics = async (mode) => {
+    const request = ++graphicsRequest;
+    await Promise.all([...bitmapSvgs].map(async ([key, text]) => {
+      const img = await svgImage(restyleBitmaps(text, mode));
+      if (request !== graphicsRequest || !img) return; // superseded by a newer switch
+      images.set(key, img);
+      stage.bitmaps.delete(key);
+    }));
+  };
 
   let memory;
   /** Read an AssemblyScript string (UTF-16, byte length stored 4 bytes before the pointer). */
@@ -146,6 +188,8 @@ async function boot() {
     optSetVolume: (channel, volume) => options.setVolume(channel, volume),
     optOn: (channel) => (options.isOn(channel) ? 1 : 0),
     optSetOn: (channel, on) => options.setOn(channel, on),
+    optGraphics: () => options.graphics,
+    optSetGraphics: (mode) => options.setGraphics(mode),
 
     random: (n) => Math.floor(Math.random() * n),
     trace: (msg) => console.log(str(msg)),
@@ -226,10 +270,12 @@ async function boot() {
   // Browsers only allow audio after a user gesture, so the game starts on a click.
   statusEl.textContent = 'Click to start';
   overlay.classList.add('ready');
-  overlay.addEventListener('click', async () => {
-    overlay.remove();
-    await audio.resume();
+  overlay.addEventListener('click', () => {
+    // Start synchronously: once the overlay is gone the canvas receives input straight away,
+    // and the input handlers need a running game. Audio catches up when the context resumes.
     game.start(mcGame.id);
+    overlay.remove();
+    audio.resume();
     last = performance.now();
     requestAnimationFrame(loop);
   }, { once: true });

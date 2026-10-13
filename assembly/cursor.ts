@@ -42,6 +42,7 @@ export class CCursor extends Clip {
     b.numState = STATE_PLACING;
     this.numState = STATE_BUILDING;
     this.boolJustAttached = true;
+    host.setVisible(this.h, false); // shown by refresh() once the mouse is over the map
     return true;
   }
 
@@ -54,6 +55,7 @@ export class CCursor extends Clip {
     this.lastCellI = this.lastCellJ = UNDEFINED_CELL;
     this.numState = STATE_ABILITY;
     this.boolJustAttached = true;
+    host.setVisible(this.h, type != TYPE_WALL); // the wall preview waits for refresh(), as above
   }
 
   /** Drop whatever is attached — unless it was attached during this very frame's click. */
@@ -78,7 +80,10 @@ export class CCursor extends Clip {
     this.lastCellJ = j;
     const mc = this.mcCursor!;
     const building = this.buildingCursor;
-    host.setVisible(this.h, true);
+    // Cell-snapped previews (buildings, walls) are hidden off the map, like the grid. The
+    // original left them visible, stuck on their last column because x is undefined out there.
+    const snapped = this.numState == STATE_BUILDING || this.numAbility == TYPE_WALL;
+    host.setVisible(this.h, !(snapped && cell.out));
 
     if (this.numState == STATE_BUILDING && building != null) {
       building.numCellI = cell.i;

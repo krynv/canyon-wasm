@@ -21,8 +21,10 @@ npm start          # builds game.wasm, serves http://localhost:8080
 
 Controls are the original's: mouse to build, **Space** send next wave, **P** pause, **M** mute, **Q** quit — plus **Esc**, which also pauses.
 
-Sound options are an addition to the original: an **Options** button on the main menu, and the
-same music / effects controls under the "Paused" dialog during a mission. They are assembled from
+Options are an addition to the original: an **Options** button on the main menu, and the same
+controls under the "Paused" dialog during a mission. They cover music / effects volume and a
+graphics mode for the bitmap art: ORIGINAL (each bitmap smoothed or not as the SWF flags it),
+SMOOTH or PIXEL. The modes restyle the same image files in memory; there are no extra copies. They are assembled from
 the game's own button art and font (`add_options_ui` in `tools/build_assets.py`), handled in
 `assembly/game.ts`, and remembered in the browser (`web/options.js`).
 
@@ -51,6 +53,9 @@ with a full wave period, the radar-dome damage bonus surviving into the next mis
 gauss shots that miss flying on forever.
 
 Known differences from the Flash original:
+
+- The building / wall placement preview is hidden while the mouse is off the map. The original
+  left it on screen, stuck on its last column.
 
 - Music stays at one level; the original played it at 30% during missions and 100% on menus.
 - The difficulty captions are black with a light outline instead of white with a drop shadow.
